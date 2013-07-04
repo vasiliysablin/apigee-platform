@@ -1,7 +1,8 @@
 # encoding: utf-8
-
+$LOAD_PATH << "./lib/"
 require 'rubygems'
 require 'bundler'
+
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -12,39 +13,30 @@ end
 require 'rake'
 
 require 'jeweler'
+require 'apigee-platform'
 Jeweler::Tasks.new do |gem|
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "apigee-platform"
   gem.homepage = "http://github.com/woodoo/apigee-platform"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{This is a ruby wrapper for Apigee Platform API (http://apigee.com/)}
+  gem.description = gem.summary
   gem.email = "vasiliy.sablin@gmail.com"
   gem.authors = ["Vasiliy Sablin"]
+  gem.version = ApigeePlatform::Version::STRING
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
+require 'rspec/core'
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = FileList['spec/**/*_spec.rb']
 end
-
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-  test.rcov_opts << '--exclude "gems/*"'
-end
-
-task :default => :test
+task :default => :spec
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
+  version = ApigeePlatform::Version::STRING
 
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "apigee-platform #{version}"
