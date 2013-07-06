@@ -51,7 +51,7 @@ Gem is based on ActiveResource.
 
   Create new app for developer
 
-    new_app = developer.app
+    new_app = developer.create_app
     new_app.name = 'my_super_app'
     new_app.save
     # => true
@@ -60,8 +60,7 @@ Gem is based on ActiveResource.
 
     app = developer.app 'my_super_app'
 
-    # or you could use DeveloperApp object
-
+    # or you could use DeveloperApp resource directly
     app = ApigeePlatform::Objects::DeveloperApp.find 'my_super_app', :params => {:developer_id => DEVELOPER_ID_OR_EMAIL}
 
   Get developer app keys. Keys were created automatically by Apigee with app.
@@ -116,7 +115,7 @@ Gem is based on ActiveResource.
     company.apps
     # => []
 
-    new_app = company.app
+    new_app = company.create_app
     new_app.name = 'my_super_app2'
     new_app.save
     # => true
